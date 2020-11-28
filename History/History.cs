@@ -1033,6 +1033,10 @@ namespace History
 		}
 		void logEdit(byte etype, ITile tile, int X, int Y, ushort type, string account, List<Vector2> done, byte style = 0, int alt = 0, int random = -1, bool direction = false)
 		{
+			if (account == "unregistered")
+			{
+				return;
+			}
 			switch (etype)
 			{
 				case 0: //killtile
@@ -1663,7 +1667,7 @@ namespace History
 			}
 			SqlTableCreator sqlcreator = new SqlTableCreator(Database,
 				Database.GetSqlType() == SqlType.Sqlite ? (IQueryBuilder)new SqliteQueryCreator() : new MysqlQueryCreator());
-			sqlcreator.EnsureTableStructure(new SqlTable("History",
+			sqlcreator.EnsureTableStructure(new SqlTable("build_history",
 				new SqlColumn("Time", MySqlDbType.Int32),
 				new SqlColumn("Account", MySqlDbType.VarChar) { Length = 50 },
 				new SqlColumn("Action", MySqlDbType.Int32),
